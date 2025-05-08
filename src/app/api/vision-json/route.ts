@@ -7,7 +7,7 @@ You are an expert interior designer analyzing a room from an uploaded image. Pro
 `;
 
 const imageUrl =
-  "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=500&auto=format";
+  "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1200&auto=format";
 
 export async function GET(request: Request) {
   const start = new Date();
@@ -18,6 +18,7 @@ export async function GET(request: Request) {
   // console.log("starting to generate room json");
 
   const extract = await togetherBaseClient.chat.completions.create({
+    //model: "Qwen/Qwen2-VL-72B-Instruct", // qwen seems mostly fine 10 seconds runs
     model: "meta-llama/Llama-4-Scout-17B-16E-Instruct",
     messages: [
       {
@@ -41,7 +42,7 @@ export async function GET(request: Request) {
   const timeTakenSeconds = (end.getTime() - start.getTime()) / 1000;
 
   console.log(
-    "time taken to generate room TEXT ",
+    "time taken to generate room JSON: ",
     timeTakenSeconds,
     " seconds"
   );
